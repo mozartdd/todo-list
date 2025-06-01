@@ -1,20 +1,20 @@
 import { addProject, projectLibrary } from "./functionality";
 
 const openModule = document.querySelector("[data-open-module]");
-const moduleClose = document.querySelector("[data-close-module]");
+const closeModule = document.querySelector("[data-close-module]");
 const addProjectButton = document.querySelector("[data-add-project]"); // Button that add's project inside module.
-const dialog = document.querySelector("dialog");
-const projectName = document.querySelector("[data-project-name]");
+const dialogWindow = document.querySelector("dialog");
+const projectNameInput = document.querySelector("[data-project-name]");
 
 openModule.addEventListener("click", () => {
-    projectName.value = "";
-    dialog.showModal();
+    projectNameInput.value = `Project ${projectLibrary.length + 1}`;
+    dialogWindow.showModal();
 })
-moduleClose.addEventListener("click", () => {
-    dialog.close();
+closeModule.addEventListener("click", () => {
+    dialogWindow.close();
 })
 addProjectButton.addEventListener("click", () => {
-    addProject(projectName.value);
+    addProject(projectNameInput.value);
     console.log(projectLibrary);
-    dialog.close();
+    dialogWindow.close();
 })
