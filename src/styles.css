@@ -24,6 +24,8 @@ img, picture, video, canvas, svg {
 input, button, textarea, select {
     font: inherit;
 }
+
+/* LEFT NAV BAT STYLE SETTINGS */
 nav {
     background-color: #4287f5e0;
 
@@ -48,6 +50,15 @@ nav div:nth-of-type(2) img {
     width: 50px;
 
     transform: translate(0px, -10px);
+}
+
+ul {
+    padding-left: 10px;
+}
+ul li {
+    list-style: none;
+    font-size: clamp(1.5rem, 2vw, 4rem);
+    cursor: pointer;
 }
 
 /* MAIN SECTION OF PROJECT */

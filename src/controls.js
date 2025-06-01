@@ -1,4 +1,5 @@
 import { addProject, projectLibrary } from "./functionality";
+import { updateDisplay } from "./ui_change";
 
 const openModule = document.querySelector("[data-open-module]");
 const closeModule = document.querySelector("[data-close-module]");
@@ -15,6 +16,6 @@ closeModule.addEventListener("click", () => {
 })
 addProjectButton.addEventListener("click", () => {
     addProject(projectNameInput.value);
-    console.log(projectLibrary);
+    updateDisplay();
     dialogWindow.close();
 })
