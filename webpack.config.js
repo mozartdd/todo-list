@@ -9,6 +9,10 @@ module.exports = {
         filename: "main.js",
         clean: true
     },
+    devtool: "eval-source-map",
+    devServer: {
+        watchFiles: ["./src/template.html"],
+    },
     plugins: [
         new HtmlWebpackPlugin({
             template: "./src/template.html"
@@ -17,9 +21,17 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.html$/i,
+                loader: "html-loader",
+            },
+            {
                 test: /\.css$/i,
                 use: ["style-loader", "css-loader"],
-            }
+            },
+            {
+                test: /\.(png|svg|jpg|jpeg|gif)$/i,
+                type: "asset/resource",
+            },
         ]
     }
 }

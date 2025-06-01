@@ -1,3 +1,75 @@
+:root {
+    --large-margin: 5rem;
+    --small-margin: .5rem;
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+* {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+}
 body {
-    background-color: red;
+    line-height: 1.5;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: row;
+}
+img, picture, video, canvas, svg {
+    display: block;
+    max-width: 100%;
+}
+input, button, textarea, select {
+    font: inherit;
+}
+nav {
+    background-color: #4287f5e0;
+
+    min-width: 250px;
+}
+nav div:first-child {
+    display: flex;
+    justify-content: flex-end;
+    cursor: pointer;
+    margin-top: var(--small-margin);
+}
+nav div:nth-of-type(2) {
+    display: flex;
+    justify-content: space-between;
+    margin: var(--large-margin) var(--small-margin) var(--large-margin) var(--small-margin);
+}
+h1 {
+    font-size: clamp(1.5rem, 2vw, 4rem);
+}
+nav div:nth-of-type(2) img {
+    cursor: pointer;
+    width: 50px;
+
+    transform: translate(0px, -10px);
+}
+
+/* MAIN SECTION OF PROJECT */
+main {
+    background-color: #ebf2fc;
+    flex: 5;
+}
+
+/* DIALOG TO ADD PROJECT */
+dialog {
+    margin: auto;
+    border-radius: 15px;
+    min-width: 350px;
+    min-height: 150px;
+}
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.522);
+}
+dialog div {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+
+    font-size: 2rem;
 }
