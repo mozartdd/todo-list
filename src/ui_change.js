@@ -20,10 +20,11 @@ window.onload = () => {
 }
 
 function updateDisplay() {
-    const currentProject = returnCurrentProject();
-    if (!currentProject) return;
     todo.innerHTML = "";
     ul.innerHTML = ""; // Clear display.
+
+    const currentProject = returnCurrentProject();
+    if (!currentProject) return;
 
     // Iterates over each project.
     projectLibrary.forEach((project) => {
@@ -33,7 +34,9 @@ function updateDisplay() {
         currentProjectName.innerHTML = getActiveProjectName();
         list.innerHTML = `<div class="each-project-div">${project.projectName}</div><span class="delete-project">x</span>`
         ul.appendChild(list);
-        currentProject.tasks.forEach((task) => {
+    })
+
+    currentProject.tasks.forEach((task) => {
             todo.innerHTML = `
                 Task name: ${task.name}<br>
                 Due date: ${task.due}<br>
@@ -41,7 +44,8 @@ function updateDisplay() {
                 `;
             taskDiv.appendChild(todo);
         })
-    })
+        console.log(projectLibrary);
+        
     attachEventListeners();
 }
 

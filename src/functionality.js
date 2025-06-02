@@ -2,7 +2,7 @@
 const projectLibrary = [];
 // Variable holds current selected project.
 let activeProjectId = "Project-1";
-let activeProjectName = null;
+let activeProjectName = "Clean Garage";
 
 const projectId = getActiveProjectId();
 
@@ -36,14 +36,36 @@ function addProject(projectName) {
         return;
     }
     projectLibrary.push(project);
+    if (!activeProjectId) {
+        activeProjectId = project.id;
+        activeProjectName = project.projectName;
+    }   
     return project;
 }
 
 // Removes project form project library array.
 function removeProject(projectId) {
-    const index = projectLibrary.findIndex(project => project.id === projectId);
-    if (index !== -1) projectLibrary.splice(index, 1);
+  const idx = projectLibrary.findIndex(p => p.id === projectId);
+  if (idx === -1) return;
+
+  // If we’re deleting the active project, immediately choose a new one:
+  if (projectLibrary[idx].id === activeProjectId) {
+    projectLibrary.splice(idx, 1);
+
+    if (projectLibrary.length > 0) {
+      // pick the first remaining project
+      activeProjectId = projectLibrary[0].id;
+      activeProjectName = projectLibrary[0].projectName;
+    } else {
+      activeProjectId = null;
+      activeProjectName = "";
+    }
+  } else {
+    // not deleting active: just remove it
+    projectLibrary.splice(idx, 1);
+  }
 }
+
 
 // Sets project as active.
 function setProjectAsActive(projectId, projectName) {
