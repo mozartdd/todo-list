@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Todo App</title>
+    <link rel="stylesheet" href="./styles.css">
 </head>
 <body>
     <nav>
@@ -17,18 +18,46 @@
         <header>
             <p>Projects</p><p>></p><div data-current-project>First Project</div>
         </header>
-        <div class="button-div"><button class="task-button" data-task-button>Add task</button></div>
-        <div class="task-grid">
-            <div class="todo-task" data-todo-task></div>
+        <div class="button-div">
+            <button class="task-button" data-task-button>Add task</button>
         </div>
+        <div class="task-grid"></div>
     </main>
-    <dialog>
-        <form action="">
-            <label for="name">Project Name</label>
-            <input data-project-name type="text" id="name" name="project_name">
+    
+    <!-- Project Dialog -->
+    <dialog id="project-dialog">
+        <form id="project-form">
+            <label for="project-name">Project Name</label>
+            <input data-project-name type="text" id="project-name" required>
             <button data-add-project>Add project</button>
-            <button data-close-module>Close</button>
+            <button type="button" data-close-project-dialog>Close</button>
         </form>
     </dialog>
+    
+    <!-- Task Dialog -->
+    <dialog id="task-dialog">
+        <form id="task-form">
+            <label for="task-name">Task Name</label>
+            <input type="text" id="task-name" required>
+            
+            <label for="task-due">Due Date</label>
+            <input type="date" id="task-due" required>
+            
+            <label for="task-priority">Priority</label>
+            <select id="task-priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+            
+            <label for="task-description">Description</label>
+            <textarea id="task-description"></textarea>
+            
+            <button type="submit">Add Task</button>
+            <button type="button" data-close-task-dialog>Cancel</button>
+        </form>
+    </dialog>
+    
+    <script type="module" src="index.js"></script>
 </body>
 </html>

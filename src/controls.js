@@ -2,31 +2,33 @@ import {
     addProject, 
     projectLibrary, 
     removeProject, 
-    setProjectAsActive
-} from "./functionality";
-import { updateDisplay } from "./ui_change";
+    setProjectAsActive,
+    returnCurrentProject
+} from "./functionality.js";
+import { updateDisplay } from "./ui_change.js";
 
 const openModule = document.querySelector("[data-open-module]");
-const closeModule = document.querySelector("[data-close-module]");
+const closeProjectDialog = document.querySelector("[data-close-project-dialog]");
 const addProjectButton = document.querySelector("[data-add-project]");
-const dialogWindow = document.querySelector("dialog");
+const projectDialog = document.getElementById("project-dialog");
 const projectNameInput = document.querySelector("[data-project-name]");
 
-const date = new Date();
-let day = date.getDate();
-let month = date.getMonth() + 1;  // Months are 0-indexed, added +1
-let year = date.getFullYear();
+// Task dialog elements
+const taskDialog = document.getElementById("task-dialog");
+const taskForm = document.getElementById("task-form");
+const openTaskDialog = document.querySelector("[data-task-button]");
+const closeTaskDialog = document.querySelector("[data-close-task-dialog]");
 
-// Opens dialog window.
+// Opens project dialog window.
 openModule.addEventListener("click", () => {
     projectNameInput.value = `Project ${projectLibrary.length + 1}`;
-    dialogWindow.showModal();
+    projectDialog.showModal();
 });
 
-// Closes dialog window.
-closeModule.addEventListener("click", (event) => {
+// Closes project dialog window.
+closeProjectDialog.addEventListener("click", (event) => {
     event.preventDefault();
-    dialogWindow.close();
+    projectDialog.close();
 });
 
 // Adds project to navbar.
@@ -34,7 +36,37 @@ addProjectButton.addEventListener("click", (event) => {
     event.preventDefault();
     addProject(projectNameInput.value);
     updateDisplay();
-    dialogWindow.close();
+    projectDialog.close();
+});
+
+// Opens task dialog
+openTaskDialog.addEventListener("click", () => {
+    taskDialog.showModal();
+});
+
+// Closes task dialog
+closeTaskDialog.addEventListener("click", (event) => {
+    event.preventDefault();
+    taskDialog.close();
+});
+
+// Handle task form submission
+taskForm.addEventListener("submit", (event) => {
+    event.preventDefault();
+    
+    const taskName = document.getElementById("task-name").value;
+    const dueDate = document.getElementById("task-due").value;
+    const priority = document.getElementById("task-priority").value;
+    const description = document.getElementById("task-description").value;
+    
+    const activeProject = returnCurrentProject();
+    if (activeProject) {
+        activeProject.createTask(taskName, dueDate, priority, description);
+        updateDisplay();
+    }
+    
+    taskDialog.close();
+    taskForm.reset();
 });
 
 function attachEventListeners() {
@@ -58,9 +90,35 @@ function attachEventListeners() {
         button.addEventListener("click", () => {
             const list = button.closest("li");
             const id = list.getAttribute("data-class");
-            const name = button.textContent;  // Simplified name extraction
+            const name = button.textContent;
             setProjectAsActive(id, name);
             updateDisplay();
+        });
+    });
+
+    // Task completion toggle
+    const taskCheckboxes = document.querySelectorAll(".task-checkbox");
+    taskCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener("change", function() {
+            const taskId = this.dataset.taskId;
+            const activeProject = returnCurrentProject();
+            if (activeProject) {
+                activeProject.toggleTaskCompletion(taskId);
+                updateDisplay();
+            }
+        });
+    });
+
+    // Task deletion
+    const deleteTaskButtons = document.querySelectorAll(".delete-task");
+    deleteTaskButtons.forEach(button => {
+        button.addEventListener("click", function() {
+            const taskId = this.dataset.taskId;
+            const activeProject = returnCurrentProject();
+            if (activeProject && confirm("Delete this task?")) {
+                activeProject.deleteTask(taskId);
+                updateDisplay();
+            }
         });
     });
 }

@@ -1,52 +1,71 @@
 import { 
     projectLibrary, 
-    addProject, 
     getActiveProjectName,
-    returnCurrentProject
-} from "./functionality";
-import { attachEventListeners } from "./controls";
+    returnCurrentProject,
+    getProjectById
+} from "./functionality.js";
+import { attachEventListeners } from "./controls.js";
 
-const ul = document.querySelector("ul");
-const todo = document.createElement("div");
-const taskDiv = document.querySelector("[data-todo-task]");
-const currentProjectName = document.querySelector("[data-current-project]");
+const projectList = document.querySelector("nav ul");
+const currentProjectDiv = document.querySelector("[data-current-project]");
+const taskGrid = document.querySelector(".task-grid");
 
-// Adds default project.
-window.onload = () => {
-    const currentProject = returnCurrentProject();
-    addProject("Clean Garage");
-    addProject("Make web-site");
-    updateDisplay();
-}
-
-function updateDisplay() {
-    todo.innerHTML = "";
-    ul.innerHTML = ""; // Clear display.
-
-    const currentProject = returnCurrentProject();
-    if (!currentProject) return;
-
-    // Iterates over each project.
-    projectLibrary.forEach((project) => {
-        const list = document.createElement("li");
-        list.setAttribute("data-class", project.id);
-
-        currentProjectName.innerHTML = getActiveProjectName();
-        list.innerHTML = `<div class="each-project-div">${project.projectName}</div><span class="delete-project">x</span>`
-        ul.appendChild(list);
-    })
-
-    currentProject.tasks.forEach((task) => {
-            todo.innerHTML = `
-                Task name: ${task.name}<br>
-                Due date: ${task.due}<br>
-                Description: ${task.desc}
-                `;
-            taskDiv.appendChild(todo);
-        })
-        console.log(projectLibrary);
-        
+export function updateDisplay() {
+    renderProjects();
+    renderTasks();
     attachEventListeners();
 }
 
-export { updateDisplay };
+function renderProjects() {
+    projectList.innerHTML = "";
+    
+    projectLibrary.forEach(project => {
+        const li = document.createElement("li");
+        li.setAttribute("data-class", project.id);
+        
+        const projectDiv = document.createElement("div");
+        projectDiv.className = "each-project-div";
+        projectDiv.textContent = project.projectName;
+        
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete-project";
+        deleteButton.textContent = "×";
+        
+        li.appendChild(projectDiv);
+        li.appendChild(deleteButton);
+        projectList.appendChild(li);
+    });
+}
+
+function renderTasks() {
+    const activeProject = returnCurrentProject();
+    currentProjectDiv.textContent = activeProject ? activeProject.projectName : "No Project";
+    taskGrid.innerHTML = "";
+    
+    if (!activeProject) return;
+    
+    activeProject.tasks.forEach(task => {
+        const taskCard = document.createElement("div");
+        taskCard.className = `task-card ${task.completed ? "completed" : ""}`;
+        taskCard.dataset.taskId = task.id;
+        
+        taskCard.innerHTML = `
+            <div class="task-header">
+                <input type="checkbox" class="task-checkbox" 
+                    data-task-id="${task.id}" 
+                    ${task.completed ? "checked" : ""}>
+                <h3 class="task-title">${task.name}</h3>
+            </div>
+            <div class="task-due">Due: ${task.due}</div>
+            <div class="task-priority ${task.level}">${task.level}</div>
+            <p class="task-desc">${task.desc}</p>
+            <button class="delete-task" data-task-id="${task.id}">Delete</button>
+        `;
+        
+        taskGrid.appendChild(taskCard);
+    });
+    
+    if (activeProject.tasks.length === 0) {
+        taskGrid.innerHTML = `<div class="no-tasks">No tasks in this project yet!</div>`;
+    }
+}
