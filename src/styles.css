@@ -1,6 +1,7 @@
 :root {
     --large-margin: 5rem;
-    --small-margin: .5rem;
+    --small-margin: 1rem;
+    --main-color: #ebf2fc;
 }
 
 *, *::before, *::after {
@@ -13,6 +14,8 @@
 body {
     line-height: 1.5;
     height: 100vh;
+    background-color: #11284c;
+    color: var(--main-color);
 
     display: flex;
     flex-direction: row;
@@ -27,44 +30,81 @@ input, button, textarea, select {
 
 /* LEFT NAV BAT STYLE SETTINGS */
 nav {
-    background-color: #4287f5e0;
-
-    min-width: 250px;
+    min-width: 300px;
+    max-width: 18%;
 }
-nav div:first-child {
-    display: flex;
-    justify-content: flex-end;
-    cursor: pointer;
-    margin-top: var(--small-margin);
-}
-nav div:nth-of-type(2) {
+nav > div:first-child {
     display: flex;
     justify-content: space-between;
-    margin: var(--large-margin) var(--small-margin) var(--large-margin) var(--small-margin);
+
+    margin: 3rem var(--small-margin) var(--large-margin) var(--small-margin);
 }
 h1 {
-    font-size: clamp(1.5rem, 2vw, 4rem);
+    font-size: clamp(3.5rem, 3vw, 4rem);
 }
-nav div:nth-of-type(2) img {
+nav div:first-child img {
     cursor: pointer;
-    width: 50px;
+    width: 40px;
 
-    transform: translate(0px, -10px);
+    transform: translate(0px, -5x);
+    /* display: none; */
 }
 
 ul {
     padding-left: 10px;
+    display: flex;
+    flex-direction: column;
+    gap: var(--small-margin);
 }
 ul li {
     list-style: none;
-    font-size: clamp(1.5rem, 2vw, 4rem);
+
+    font-size: clamp(2rem, 2vw, 2rem);
+    border-radius: var(--small-margin);
+    padding-left: var(--small-margin);
+    width: 95%;
+    overflow: hidden;
+
+    background-color: #264472;
+}
+.each-project-div {
+    display: flex;
+    justify-content: space-between;
     cursor: pointer;
+}
+.delete-project {
+    margin-right: var(--small-margin);
+    cursor: pointer;
+    color: var(--main-color);
+}
+.delete-project:hover {
+    color: rgb(113, 53, 53);
 }
 
 /* MAIN SECTION OF PROJECT */
 main {
-    background-color: #ebf2fc;
+    background-color: var(--main-color);
+    color: black;
+
+    margin-right: var(--small-margin);
     flex: 5;
+    height: 98vh;
+    align-self: flex-end;
+    border-radius: var(--small-margin) var(--small-margin) 0 0;
+}
+main > header {
+    font-size: clamp(1.3rem, 1.5vw, 1.8rem);
+
+    display: flex;
+    gap: 1rem;
+    padding: 3rem 0 1rem 2rem;
+
+    border-bottom: 1px solid rgba(128, 128, 128, 0.45);
+    width: 95%;
+    margin: auto;
+}
+header > p {
+    color: gray;
 }
 
 /* DIALOG TO ADD PROJECT */
@@ -77,7 +117,7 @@ dialog {
 dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.522);
 }
-dialog div {
+form {
     display: flex;
     flex-direction: column;
     text-align: center;

@@ -27,8 +27,17 @@ export default class Project {
 // Creates new Project and adds it to project library.
 function addProject(projectName) {
     const project = new Project(projectName);
+    if (projectName === "") {
+        return;
+    }
     projectLibrary.push(project);
     return project;
 }
 
-export { projectLibrary, addProject }
+// Removes project form project library array.
+function removeProject(projectId) {
+    const index = projectLibrary.findIndex(project => project.id === projectId);
+    if (index !== -1) projectLibrary.splice(index, 1);
+}
+
+export { projectLibrary, addProject, removeProject }

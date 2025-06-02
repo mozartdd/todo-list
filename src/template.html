@@ -8,23 +8,23 @@
 <body>
     <nav>
         <div>
-            <img width="40"src="./sidebar.svg" alt="svg image of side bar collapse icon">
-        </div>
-        <div>
-            <h1>Projects</h1>
-            <img data-open-module src="./add.png" alt="plus button to add new project">
+            <h1>ToDo</h1>
+            <img data-open-module src="./assets/add.svg" alt="plus button to add new project">
         </div>
         <ul></ul>
     </nav>
     <main>
-        <dialog>
-            <div>
-                <label for="name">Project Name</label>
-                <input data-project-name type="text" id="name" name="project_name" value="da">
-                <button data-add-project>Add project</button>
-                <button data-close-module>Close</button>
-            </div>
-        </dialog>
+        <header>
+            <p>Projects</p><p>></p><div data-current-project>First Project</div>
+        </header>
     </main>
+    <dialog>
+        <form action="">
+            <label for="name">Project Name</label>
+            <input data-project-name type="text" id="name" name="project_name">
+            <button data-add-project>Add project</button>
+            <button data-close-module>Close</button>
+        </form>
+    </dialog>
 </body>
 </html>
