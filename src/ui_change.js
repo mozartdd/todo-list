@@ -7,7 +7,7 @@ const ul = document.querySelector("ul");
 // Adds default project.
 window.onload = () => {
     addProject("First Project");
-    
+
     updateDisplay();
 }
 

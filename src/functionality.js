@@ -1,5 +1,7 @@
 // Array that holds all projects.
 const projectLibrary = [];
+// Variable holds current selected project.
+let activeProjectId = null;
 
 // Class that creates project.
 export default class Project {
@@ -40,4 +42,12 @@ function removeProject(projectId) {
     if (index !== -1) projectLibrary.splice(index, 1);
 }
 
+// Sets project as active.
+function setProjectAsActive(projectId) {
+    activeProjectId = projectId;
+}
+// Gets active project.
+function getActiveProject() {
+    return activeProjectId;
+}
 export { projectLibrary, addProject, removeProject }
