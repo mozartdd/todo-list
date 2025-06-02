@@ -1,7 +1,10 @@
 // Array that holds all projects.
 const projectLibrary = [];
 // Variable holds current selected project.
-let activeProjectId = null;
+let activeProjectId = "Project-1";
+let activeProjectName = null;
+
+const projectId = getActiveProjectId();
 
 // Class that creates project.
 export default class Project {
@@ -43,11 +46,30 @@ function removeProject(projectId) {
 }
 
 // Sets project as active.
-function setProjectAsActive(projectId) {
+function setProjectAsActive(projectId, projectName) {
     activeProjectId = projectId;
+    activeProjectName = projectName;
 }
-// Gets active project.
-function getActiveProject() {
+// Gets active project name.
+function getActiveProjectName() {
+    return activeProjectName;
+}
+// Gets active project id.
+function getActiveProjectId() {
     return activeProjectId;
 }
-export { projectLibrary, addProject, removeProject }
+// Return current active project.
+function returnCurrentProject() {
+    const activeProject = projectLibrary.find(p => p.id === activeProjectId);
+    return activeProject;
+}
+
+export {
+        projectLibrary,
+        addProject,
+        removeProject, 
+        setProjectAsActive, 
+        getActiveProjectName,
+        getActiveProjectId,
+        returnCurrentProject
+    }

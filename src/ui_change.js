@@ -1,17 +1,28 @@
-import { projectLibrary, addProject } from "./functionality";
+import { 
+    projectLibrary, 
+    addProject, 
+    getActiveProjectName,
+    returnCurrentProject
+} from "./functionality";
 import { attachEventListeners } from "./controls";
 
-
 const ul = document.querySelector("ul");
+const todo = document.createElement("div");
+const taskDiv = document.querySelector("[data-todo-task]");
+const currentProjectName = document.querySelector("[data-current-project]");
 
 // Adds default project.
 window.onload = () => {
-    addProject("First Project");
-
+    const currentProject = returnCurrentProject();
+    addProject("Clean Garage");
+    addProject("Make web-site");
     updateDisplay();
 }
 
 function updateDisplay() {
+    const currentProject = returnCurrentProject();
+    if (!currentProject) return;
+    todo.innerHTML = "";
     ul.innerHTML = ""; // Clear display.
 
     // Iterates over each project.
@@ -19,8 +30,17 @@ function updateDisplay() {
         const list = document.createElement("li");
         list.setAttribute("data-class", project.id);
 
-        list.innerHTML = `<div class="each-project-div">${project.projectName}<span class="delete-project">x</span></div>`
+        currentProjectName.innerHTML = getActiveProjectName();
+        list.innerHTML = `<div class="each-project-div">${project.projectName}</div><span class="delete-project">x</span>`
         ul.appendChild(list);
+        currentProject.tasks.forEach((task) => {
+            todo.innerHTML = `
+                Task name: ${task.name}<br>
+                Due date: ${task.due}<br>
+                Description: ${task.desc}
+                `;
+            taskDiv.appendChild(todo);
+        })
     })
     attachEventListeners();
 }
